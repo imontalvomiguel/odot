@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateTodoItemsTable extends Migration {
+
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('todo_items', function(Blueprint $table)
+		{
+			$table->increments('id');
+			// create the foreign key (based on the model todo_list + id)
+			$table->integer('todo_list_id');
+			// todo list content
+			$table->string('content')->unique();
+			// todo list when is completed
+			$table->dateTime('completed_on')->nullable();
+			$table->timestamps();
+		});
+	}
+
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::drop('todo_items');
+	}
+
+}
