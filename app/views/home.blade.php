@@ -21,7 +21,7 @@
   					<div class="form-group">
     					{{ Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password']) }}
   					</div>
-  					{{ Form::submit('Sign up', ['class' => 'btn btn-success']) }}
+  					{{ Form::submit('Sign up for Odot', ['class' => 'btn btn-success btn-block']) }}
 				{{ Form::close() }}
     		</div>
     	</div>
