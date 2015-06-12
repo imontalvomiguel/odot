@@ -30,8 +30,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function delete()
 	{
-		$related_items = TodoList::where('user_id', $this->id);
-		$related_items->delete();
+
+		$todoLists = TodoList::where('user_id', $this->id)->get();
+
+		// Iterating each model to execute the delete method (that deletes dependent todoItems)
+		foreach ($todoLists as $todoList) {	
+			$todoList->delete();
+		}
+
 		parent::delete();
 	}
 

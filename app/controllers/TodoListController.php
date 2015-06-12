@@ -17,7 +17,8 @@ class TodoListController extends \BaseController {
 	 */
 	public function index()
 	{
-		$todo_lists = TodoList::all();
+		$user = Auth::user();
+		$todo_lists = $user->todoLists()->get();
 		return View::make('todos.index')->with('todo_lists', $todo_lists);
 	}
 
@@ -54,11 +55,18 @@ class TodoListController extends \BaseController {
 			return Redirect::route('todos.create')->withErrors($validator)->withInput();
 		}
 
+		$user = Auth::user();
+
 		// Getting the data
 		$name = Input::get('name');
+
 		$list = new TodoList();
+
+		$list->user_id = $user->id;
 		$list->name = $name;
+
 		$list->save();
+		
 		return Redirect::route('todos.index')->withMessage('List was created!');
 	}
 
