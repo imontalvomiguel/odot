@@ -1,6 +1,16 @@
 <?php
 
+use Illuminate\Support\Facades\Hash;
+
 class UserController extends \BaseController {
+
+	public function __construct()
+	{
+		/** Every time this is instantiated,
+		* force csrf on POST method
+		*/
+		$this->beforeFilter('csrf', array('on' => ['post', 'put', 'delete']));
+	}
 
 	/**
 	 * Display a listing of the resource.
@@ -31,7 +41,33 @@ class UserController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		// define rules
+		$rules = array(
+			'name' => array('required'),
+			'email' => array('required', 'unique:users'),
+			'password' => array('required')
+		);
+
+		// pass input to validator
+		$validator = Validator::make(Input::all(), $rules);
+
+		// test if input fails
+		if ($validator->fails()) {
+			return Redirect::route('home')->withErrors($validator)->withInput();
+		}
+
+		// Getting the data
+		$name = Input::get('name');
+		$email = Input::get('email');
+		$password = Input::get('password');
+
+		$user = new User;
+		$user->name = $name;
+		$user->email = $email;
+		$user->password = Hash::make($password);
+
+		$user->save();
+		return Redirect::route('todos.index')->withMessage('User was created');
 	}
 
 

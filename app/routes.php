@@ -19,6 +19,7 @@ Route::get('/', array('as' => 'home', function() {
 	return View::make('home');
 }));
 
+Route::resource('users', 'UserController', ['except' => ['index', 'show', 'create']]);
 Route::resource('todos', 'TodoListController');
 Route::resource('todos.items', 'TodoItemController', ['except' => ['index', 'show']]);
 
@@ -28,15 +29,5 @@ Route::patch('todos/{todos}/tasks/{tasks}/complete', ['as' => 'todos.tasks.compl
 // 	var_dump($query);
 // });
 
-Route::post('login', array('as' => 'login', function()
-{
-	$email = Input::get('email');
-	$password = Input::get('password');
-
-    if (Auth::attempt(array('email' => $email, 'password' => $password)))
-	{
-    	return 'Yeiii :)';
-	} else {
-		return 'No mames -.-';
-	}
-}));
+Route::post('login', array('as' => 'login', 'uses' => 'AuthController@login'));
+Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@logout'));

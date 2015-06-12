@@ -11,17 +11,8 @@
     		</div>
     		<div class="col-md-4 sign-up-container">
     			<h3>New to Odot? <span>Sign up</span></h3>
-    			{{ Form::open() }}
-    				<div class="form-group">
-    					{{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Full name']) }}
-  					</div>
-  					<div class="form-group">
-    					{{ Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'Email']) }}
-  					</div>
-  					<div class="form-group">
-    					{{ Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password']) }}
-  					</div>
-  					{{ Form::submit('Sign up for Odot', ['class' => 'btn btn-success btn-block']) }}
+    			{{ Form::open(array('route' => 'users.store')) }}
+    				@include('users.partials._form')
 				{{ Form::close() }}
     		</div>
     	</div>

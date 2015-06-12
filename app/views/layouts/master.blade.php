@@ -24,9 +24,28 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
 				<a class="navbar-brand" href="{{ route('todos.index') }}">Odot</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
+				@if (Auth::check())
+          		<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+							<span class="glyphicon glyphicon-user"></span> {{{ Auth::user()->name }}} <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="#!"><span class="glyphicon glyphicon-cog"></span> Edit account</a></li>
+							<li><a href="{{ route('logout') }}"><span class="glyphicon glyphicon-off"></span> Log out</a></li>
+						</ul>
+					</li>
+		        </ul>
+		        @else 
         		{{ Form::open(array('route' => 'login', 'method' => 'post', 'class' => 'navbar-form navbar-right')) }}
             		<div class="form-group">
               			{{ Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email']) }}
@@ -35,7 +54,8 @@
               			{{ Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password']) }}
             		</div>
             		{{ Form::submit('Sign in', ['class' => 'btn btn-success']) }}
-          		{{ Form::close() }}
+          		{{ Form::close() }}		
+          		@endif        
         	</div>
 		</div>
 	</nav>
@@ -45,9 +65,12 @@
 		<div class="row">
 			<div class="col-xs-12">
 				@if (Session::has('message'))
-					<p class="bg-success">
+					<div class="alert alert-{{{ Session::has('class') ? Session::get('class') : 'info' }}} alert-dismissible fade in" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
 						{{{ Session::get('message') }}}
-					</p>
+					</div>
 				@endif
 				@yield('content')
 			</div>
@@ -66,6 +89,7 @@
 	================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	{{ HTML::script('http://code.jquery.com/jquery-2.1.4.min.js') }}
+	{{ HTML::script('js/bootstrap.min.js') }}
 	{{ HTML::script('js/app.js') }}
 </body>
 </html>

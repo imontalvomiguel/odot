@@ -66,3 +66,9 @@ footer {
 .jumbotron h3 span {
   font-weight: lighter;
 }
+
+.jumbotron .help-block{
+  font-size: 14px;
+  color: #a94442;
+  font-weight: normal;
+}
