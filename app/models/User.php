@@ -23,4 +23,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 
+	public function todoLists() 
+	{
+		return $this->hasMany('TodoList');
+	}
+
+	public function delete()
+	{
+		$related_items = TodoList::where('user_id', $this->id);
+		$related_items->delete();
+		parent::delete();
+	}
+
 }

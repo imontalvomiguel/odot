@@ -147,7 +147,9 @@ class UserController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$user = User::findOrFail($id);
+		$user->delete();
+		return Redirect::route('home')->withMessage('User was destroyed!');
 	}
 
 

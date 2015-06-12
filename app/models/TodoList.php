@@ -1,6 +1,12 @@
 <?php
 
 class TodoList extends Eloquent {
+
+	public function user()
+	{
+		return $this->belongsTo('User');
+	}
+
 	public function listItems() 
 	{
 		return $this->hasMany('TodoItem');
