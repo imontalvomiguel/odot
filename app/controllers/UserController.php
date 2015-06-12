@@ -110,7 +110,7 @@ class UserController extends \BaseController {
 		// define rules
 		$rules = array(
 			'name' => array('required'),
-			'email' => array('required', 'unique:users,email,' . $user->id),
+			'email' => array('required', 'unique:users,email,' . $id),
 			'password' => ''
 		);
 

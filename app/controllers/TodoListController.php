@@ -98,9 +98,11 @@ class TodoListController extends \BaseController {
 	 */
 	public function update($id)
 	{
+		$list = TodoList::findOrFail($id);
+
 		// define rules
 		$rules = array(
-			'name' => array('required', 'unique:todo_lists')
+			'name' => array('required', 'unique:todo_lists,name,' . $id)
 		);
 
 		// pass input to validator
@@ -113,9 +115,11 @@ class TodoListController extends \BaseController {
 
 		// Getting the data
 		$name = Input::get('name');
-		$list = TodoList::findOrFail($id);
+		
 		$list->name = $name;
+
 		$list->update();
+
 		return Redirect::route('todos.index')->withMessage('List was updated!');
 	}
 
