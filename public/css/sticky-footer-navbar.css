@@ -69,6 +69,9 @@ footer {
 
 .jumbotron .help-block{
   font-size: 14px;
-  color: #a94442;
   font-weight: normal;
+}
+
+.text-danger {
+  color: #a94442 !important;
 }

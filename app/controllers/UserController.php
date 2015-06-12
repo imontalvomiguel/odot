@@ -91,7 +91,8 @@ class UserController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$user = User::findOrFail($id);
+		return View::make('users.edit')->withUser($user);
 	}
 
 
@@ -103,7 +104,38 @@ class UserController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+
+		$user = User::findOrFail($id);
+
+		// define rules
+		$rules = array(
+			'name' => array('required'),
+			'email' => array('required', 'unique:users,email,' . $user->id),
+			'password' => ''
+		);
+
+		// pass input to validator
+		$validator = Validator::make(Input::all(), $rules);
+
+		// test if input fails
+		if ($validator->fails()) {
+			return Redirect::route('users.edit', $id)->withErrors($validator)->withInput();
+		}
+
+		// Getting the data
+		$name = Input::get('name');
+		$email = Input::get('email');
+		$password = Input::get('password');
+		
+		$user->name = $name;
+		$user->email = $email;
+		if (!empty($password)) {
+			$user->password = Hash::make($password);
+		}
+		
+
+		$user->update();
+		return Redirect::route('todos.index')->withMessage('User was updated!')->withClass('success');
 	}
 
 

@@ -13,6 +13,7 @@
     			<h3>New to Odot? <span>Sign up</span></h3>
     			{{ Form::open(array('route' => 'users.store')) }}
     				@include('users.partials._form')
+                    {{ Form::submit('Sign up for Odot', ['class' => 'btn btn-success btn-block']) }}
 				{{ Form::close() }}
     		</div>
     	</div>

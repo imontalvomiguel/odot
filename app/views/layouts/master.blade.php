@@ -30,7 +30,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="{{ route('todos.index') }}">Odot</a>
+				<a class="navbar-brand" href="{{ route('home') }}">Odot</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				@if (Auth::check())
@@ -40,7 +40,7 @@
 							<span class="glyphicon glyphicon-user"></span> {{{ Auth::user()->name }}} <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="#!"><span class="glyphicon glyphicon-cog"></span> Edit account</a></li>
+							<li><a href="{{ route('users.edit', Auth::user()->id) }}"><span class="glyphicon glyphicon-cog"></span> Edit account</a></li>
 							<li><a href="{{ route('logout') }}"><span class="glyphicon glyphicon-off"></span> Log out</a></li>
 						</ul>
 					</li>
