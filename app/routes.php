@@ -15,9 +15,9 @@
  * 
  */
 
-Route::get('/', function() {
-	return Redirect::route('todos.index');
-});
+Route::get('/', array('as' => 'home', function() {
+	return View::make('home');
+}));
 
 Route::resource('todos', 'TodoListController');
 Route::resource('todos.items', 'TodoItemController', ['except' => ['index', 'show']]);
@@ -27,3 +27,16 @@ Route::patch('todos/{todos}/tasks/{tasks}/complete', ['as' => 'todos.tasks.compl
 // Event::listen('illuminate.query', function($query) {
 // 	var_dump($query);
 // });
+
+Route::post('login', array('as' => 'login', function()
+{
+	$email = Input::get('email');
+	$password = Input::get('password');
+
+    if (Auth::attempt(array('email' => $email, 'password' => $password)))
+	{
+    	return 'Yeiii :)';
+	} else {
+		return 'No mames -.-';
+	}
+}));

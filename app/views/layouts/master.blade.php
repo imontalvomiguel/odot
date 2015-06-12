@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>Sticky Footer Navbar Template for Bootstrap</title>
+	<title>Odot</title>
 
 	<!-- Bootstrap core CSS -->
 	<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -24,8 +24,19 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="{{ route('todos.index') }}">ODOT</a>
+				<a class="navbar-brand" href="{{ route('todos.index') }}">Odot</a>
 			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+        		{{ Form::open(array('route' => 'login', 'method' => 'post', 'class' => 'navbar-form navbar-right')) }}
+            		<div class="form-group">
+              			{{ Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email']) }}
+            		</div>
+            		<div class="form-group">
+              			{{ Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password']) }}
+            		</div>
+            		{{ Form::submit('Sign in', ['class' => 'btn btn-success']) }}
+          		{{ Form::close() }}
+        	</div>
 		</div>
 	</nav>
 

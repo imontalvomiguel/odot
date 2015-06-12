@@ -53,3 +53,16 @@ ul.list-inline {
 footer {
   margin-top: 1rem;
 }
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  background-color: transparent;
+}
+
+.jumbotron .sign-up-container {
+  margin-top: 1.5rem;
+}
+
+.jumbotron h3 span {
+  font-weight: lighter;
+}
