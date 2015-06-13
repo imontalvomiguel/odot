@@ -15,25 +15,37 @@
  * 
  */
 
-Route::get('/', array('as' => 'home', function() {
-	return View::make('home');
-}));
+Route::group(array('before' => 'guest'), function() 
+{
+	Route::get('/', array('as' => 'home', function() 
+	{
+		return View::make('home');
+	}));
 
-Route::post('user', array('as' => 'user.store', 'uses' => 'UserController@store'));
-Route::get('user/edit', array('as' => 'user.edit', 'uses' => 'UserController@edit'));
-Route::put('user', array('as' => 'user.update', 'uses' => 'UserController@update'));
-Route::delete('user', array('as' => 'user.destroy', 'uses' => 'UserController@destroy'));
+	Route::post('user', array('as' => 'user.store', 'uses' => 'UserController@store'));
 
-Route::resource('todos', 'TodoListController');
+	Route::post('login', array('as' => 'login', 'uses' => 'AuthController@login'));
 
-Route::resource('todos.items', 'TodoItemController', ['except' => ['index', 'show']]);
+});
 
-Route::patch('todos/{todos}/tasks/{tasks}/complete', ['as' => 'todos.tasks.complete', 'uses' => 'TodoItemController@complete']);
 
-Route::post('login', array('as' => 'login', 'uses' => 'AuthController@login'));
-Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@logout'));
+Route::group(array('before' => 'auth'), function() 
+{
+
+	Route::get('user/edit', array('as' => 'user.edit', 'uses' => 'UserController@edit'));
+	Route::put('user', array('as' => 'user.update', 'uses' => 'UserController@update'));
+	Route::delete('user', array('as' => 'user.destroy', 'uses' => 'UserController@destroy'));
+
+	Route::resource('todos', 'TodoListController');
+
+	Route::resource('todos.items', 'TodoItemController', ['except' => ['index', 'show']]);
+
+	Route::patch('todos/{todos}/tasks/{tasks}/complete', ['as' => 'todos.tasks.complete', 'uses' => 'TodoItemController@complete']);
+
+	Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@logout'));
+
+});
 
 // Event::listen('illuminate.query', function($query) {
 // 	var_dump($query);
 // });
-
