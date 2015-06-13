@@ -67,7 +67,10 @@ class UserController extends \BaseController {
 		$user->password = Hash::make($password);
 
 		$user->save();
-		return Redirect::route('todos.index')->withMessage('User was created');
+
+		Auth::login($user);
+
+		return Redirect::route('todos.index')->withMessage('User was created')->withClass('success');
 	}
 
 
