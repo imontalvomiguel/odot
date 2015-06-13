@@ -66,7 +66,7 @@ class TodoListController extends \BaseController {
 		$list->name = $name;
 
 		$list->save();
-		
+
 		return Redirect::route('todos.index')->withMessage('List was created!');
 	}
 
@@ -79,7 +79,8 @@ class TodoListController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$list = TodoList::findOrFail($id);
+		$user = Auth::user();
+		$list = $user->todoLists()->findOrFail($id);
 		$items = $list->listItems()->get();
 		return View::make('todos.show')->withList($list)->withItems($items);
 	}
@@ -93,7 +94,8 @@ class TodoListController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$list = TodoList::findOrFail($id);
+		$user = Auth::user();
+		$list = $user->todoLists()->findOrFail($id);
 		return View::make('todos.edit')->withList($list);
 	}
 
@@ -106,7 +108,8 @@ class TodoListController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$list = TodoList::findOrFail($id);
+		$user = Auth::user();
+		$list = $user->todoLists()->findOrFail($id);
 
 		// define rules
 		$rules = array(
