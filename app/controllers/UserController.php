@@ -94,7 +94,7 @@ class UserController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$user = User::findOrFail($id);
+		$user = Auth::user();
 		return View::make('users.edit')->withUser($user);
 	}
 
@@ -108,7 +108,7 @@ class UserController extends \BaseController {
 	public function update($id)
 	{
 
-		$user = User::findOrFail($id);
+		$user = Auth::user();
 
 		// define rules
 		$rules = array(
@@ -150,8 +150,10 @@ class UserController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		$user = User::findOrFail($id);
+		$user = Auth::user();
+
 		$user->delete();
+
 		return Redirect::route('home')->withMessage('User was destroyed!');
 	}
 
