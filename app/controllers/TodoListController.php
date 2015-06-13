@@ -55,17 +55,17 @@ class TodoListController extends \BaseController {
 			return Redirect::route('todos.create')->withErrors($validator)->withInput();
 		}
 
-		$user = Auth::user();
-
 		// Getting the data
 		$name = Input::get('name');
 
 		$list = new TodoList();
 
-		$list->user_id = $user->id;
 		$list->name = $name;
 
-		$list->save();
+		$user = Auth::user();
+
+		// saves our nested todo list related to user
+		$user->todoLists()->save($list);
 
 		return Redirect::route('todos.index')->withMessage('List was created!');
 	}
