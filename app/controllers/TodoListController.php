@@ -143,7 +143,8 @@ class TodoListController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		$list = TodoList::findOrFail($id);
+		$user = Auth::user();
+		$list = $user->todoLists()->findOrFail($id);
 		$list->delete();
 		return Redirect::route('todos.index')->withMessage('List was deleted!');
 
