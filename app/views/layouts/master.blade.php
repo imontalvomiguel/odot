@@ -40,7 +40,7 @@
 							<span class="glyphicon glyphicon-user"></span> {{{ Auth::user()->name }}} <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="{{ route('users.edit', Auth::user()->id) }}"><span class="glyphicon glyphicon-cog"></span> Account settings</a></li>
+							<li><a href="{{ route('user.edit') }}"><span class="glyphicon glyphicon-cog"></span> Account settings</a></li>
 							<li><a href="{{ route('logout') }}"><span class="glyphicon glyphicon-off"></span> Log out</a></li>
 						</ul>
 					</li>

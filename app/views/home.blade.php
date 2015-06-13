@@ -11,7 +11,7 @@
     		</div>
     		<div class="col-md-4 sign-up-container">
     			<h3>New to Odot? <span>Sign up</span></h3>
-    			{{ Form::open(array('route' => 'users.store')) }}
+    			{{ Form::open(array('route' => 'user.store')) }}
     				@include('users.partials._form')
                     {{ Form::submit('Sign up for Odot', ['class' => 'btn btn-success btn-block']) }}
 				{{ Form::close() }}

@@ -92,7 +92,7 @@ class UserController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit()
 	{
 		$user = Auth::user();
 		return View::make('users.edit')->withUser($user);
@@ -105,7 +105,7 @@ class UserController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update()
 	{
 
 		$user = Auth::user();
@@ -113,7 +113,7 @@ class UserController extends \BaseController {
 		// define rules
 		$rules = array(
 			'name' => array('required'),
-			'email' => array('required', 'unique:users,email,' . $id),
+			'email' => array('required', 'unique:users,email,' . $user->id),
 			'password' => ''
 		);
 
@@ -148,7 +148,7 @@ class UserController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy()
 	{
 		$user = Auth::user();
 
