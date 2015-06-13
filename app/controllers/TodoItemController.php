@@ -18,7 +18,10 @@ class TodoItemController extends \BaseController {
 	 */
 	public function create($list_id)
 	{
-		$todo_list = TodoList::findOrFail($list_id);
+		$user = Auth::user();
+
+		$todo_list = $user->todoLists()->findOrFail($list_id);
+
 		return View::make('items.create')->withTodoList($todo_list);
 	}
 
@@ -30,7 +33,9 @@ class TodoItemController extends \BaseController {
 	 */
 	public function store($list_id)
 	{
-		$todo_list = TodoList::findOrFail($list_id);
+		$user = Auth::user();
+
+		$todo_list = $user->todoLists()->findOrFail($list_id);
 
 		// define rules
 		$rules = array(
@@ -47,10 +52,14 @@ class TodoItemController extends \BaseController {
 
 		// Getting the data
 		$content = Input::get('content');
+
 		$item = new TodoItem();
+
 		$item->content = $content;
+
 		// saves our nested todo item
 		$todo_list->listItems()->save($item);
+
 		return Redirect::route('todos.show', $list_id)->withMessage('Item was created!');
 	}
 
@@ -64,7 +73,12 @@ class TodoItemController extends \BaseController {
 	 */
 	public function edit($list_id, $item_id)
 	{
-		$item = TodoItem::findOrFail($item_id);
+		$user = Auth::user();
+
+		$todo_list = $user->todoLists()->findOrFail($list_id);
+
+		$item = $todo_list->listItems()->findOrFail($item_id);
+
 		return View::make('items.edit')->withTodoItem($item)->withTodoListId($list_id);
 	}
 
@@ -78,6 +92,10 @@ class TodoItemController extends \BaseController {
 	 */
 	public function update($list_id, $item_id)
 	{
+		$user = Auth::user();
+
+		$todo_list = $user->todoLists()->findOrFail($list_id);
+
 		// define rules
 		$rules = array(
 			'content' => array('required')
@@ -93,9 +111,13 @@ class TodoItemController extends \BaseController {
 
 		// Getting the data
 		$content = Input::get('content');
-		$item = TodoItem::findOrFail($item_id);
+
+		$item = $todo_list->listItems()->findOrFail($item_id);
+
 		$item->content = $content;
+
 		$item->update();
+
 		return Redirect::route('todos.show', $list_id)->withMessage('Item was updated!');
 	}
 
@@ -108,8 +130,14 @@ class TodoItemController extends \BaseController {
 	 */
 	public function destroy($list_id, $item_id)
 	{
-		$item = TodoItem::findOrFail($item_id);
+		$user = Auth::user();
+
+		$todo_list = $user->todoLists()->findOrFail($list_id);
+
+		$item = $todo_list->listItems()->findOrFail($item_id);
+
 		$item->delete();
+
 		return Redirect::route('todos.show', $list_id)->withMessage('Item was destroyed!');
 	}
 
@@ -122,9 +150,16 @@ class TodoItemController extends \BaseController {
 	 */
 	public function complete($list_id, $item_id)
 	{
-		$item = TodoItem::findOrFail($item_id);
+		$user = Auth::user();
+
+		$todo_list = $user->todoLists()->findOrFail($list_id);
+
+		$item = $todo_list->listItems()->findOrFail($item_id);
+
 		$item->completed_on = date('Y-m-d H:i:s');
+
 		$item->update();
+		
 		return Redirect::route('todos.show', $list_id)->withMessage('Item was completed!');
 	}
 
