@@ -1,3 +1,4 @@
+<h1>ODOT</h1>
 Simple todo list application build with Laravel 4.2.
 
 <figure>
